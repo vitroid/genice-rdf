@@ -4,21 +4,17 @@ A [GenIce](https://github.com/vitroid/GenIce) plugin to calculate the radial dis
 
 ## Requirements
 
-    % make prepare
-will install required packages via pip.
-
 * [GenIce](https://github.com/vitroid/GenIce) >=0.16 must be installed.
 
 ## Installation
 
 ### System-wide installation
 
-Not supported.
+    % make install
 
 ### Private installation
 
-    % make install
-or copy the files in formats/ into your local formats folder of GenIce.
+Copy the files in formats/ into your local formats folder of GenIce.
 
 ## Usage
 

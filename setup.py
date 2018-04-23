@@ -18,7 +18,7 @@ with codecs.open(os.path.join(os.path.dirname(__file__), 'genice_rdf', '__init__
 setup(
     name='genice_rdf',
     version=metadata['version'],
-    description='RDF format pluing for GenIce.',
+    description='RDF format plugin for GenIce.',
     #long_description=README + '\n\n' +  CHANGES,
     classifiers=[
         "Development Status :: 4 - Beta",
