@@ -6,7 +6,7 @@ else
 	DEST=~/.genice
 endif
 
-test: 1c.rdf
+test: 5.rdf
 %.rdf: genice_rdf/formats/_RDF.py Makefile
 	genice $* -r 3 3 3 -f _RDF > $@
 install:

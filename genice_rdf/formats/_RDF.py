@@ -54,7 +54,7 @@ def hook7(lattice):
         rb = rpos[b]
         na = ra.shape[0]
         nb = rb.shape[0]
-        lattice.logger.info("  Pair {0}-{1}. ".format(a,b))
+        lattice.logger.info("  Pair {0}-{1}".format(a,b))
         i,j,delta = pl.pairs_fine_hetero(ra, rb, binw*nbin, cellmat, grid, distance=True, raw=True)
         delta = np.floor(delta/binw)
         hist = dict(zip(*np.unique(delta, return_counts=True)))
