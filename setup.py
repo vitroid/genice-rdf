@@ -40,7 +40,7 @@ setup(
             '_RDF    = genice_rdf.formats._RDF:hook7',
         ],
     },
-    install_requires=['PairList>=0.2.2', 'genice>=0.23'],
+    install_requires=['PairList>=0.2.3', 'genice>=0.23'],
 
     license='MIT',
 )
