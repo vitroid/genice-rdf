@@ -2,7 +2,6 @@
 
 # from distutils.core import setup, Extension
 from setuptools import setup, Extension
-from numpy.distutils.misc_util import get_numpy_include_dirs
 import os
 import codecs
 import re
@@ -15,11 +14,16 @@ with codecs.open(os.path.join(os.path.dirname(__file__), 'genice_rdf', '__init__
     metadata = dict(re.findall(r"""__([a-z]+)__ = "([^"]+)""", version_file.read()))
     
 
+
+long_desc = "".join(open("README.md").readlines())
+
+
 setup(
     name='genice_rdf',
     version=metadata['version'],
     description='RDF format plugin for GenIce.',
-    #long_description=README + '\n\n' +  CHANGES,
+    long_description=long_desc,
+    long_description_content_type="text/markdown",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
@@ -40,7 +44,7 @@ setup(
             '_RDF    = genice_rdf.formats._RDF:hook7',
         ],
     },
-    install_requires=['PairList>=0.2.3', 'genice>=0.23'],
+    install_requires=['PairList>=0.2.3', 'GenIce>=0.23'],
 
     license='MIT',
 )
