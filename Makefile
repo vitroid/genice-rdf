@@ -5,10 +5,14 @@ ifeq ($(OS), Darwin)
 else
 	DEST=~/.genice
 endif
+GENICE=genice
 
-test: 5.rdf
+test: 5.rdf.test
 %.rdf: genice_rdf/formats/_RDF.py Makefile
-	genice $* -r 3 3 3 -f _RDF > $@
+	$(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2,OW] > $@
+%.test:
+	make $*
+	diff $* ref/$*
 check:
 	./setup.py check
 install:

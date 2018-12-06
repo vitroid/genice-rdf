@@ -40,6 +40,9 @@ setup(
     ],
     
     entry_points = {
+        'genice_format_hook0': [
+            '_RDF    = genice_rdf.formats._RDF:argparser',
+        ],
         'genice_format_hook7': [
             '_RDF    = genice_rdf.formats._RDF:hook7',
         ],

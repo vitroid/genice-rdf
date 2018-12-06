@@ -26,6 +26,9 @@ def hist2rdf(hist, vol, natoms, binw, nbin):
 
 
 def hook7(lattice):
+    global options
+    atomtypes = options["atomtypes"]
+        
     lattice.logger.info("Hook7: Output radial distribution functions.")
     lattice.logger.info("  Total number of atoms: {0}".format(len(lattice.atoms)))
     binw = 0.003
@@ -34,7 +37,13 @@ def hook7(lattice):
     rpos = defaultdict(list)
     for atom in lattice.atoms:
         resno, resname, atomname, position, order = atom
-        rpos[atomname].append(lattice.repcell.abs2rel(position))
+        alias = atomname
+        if atomtypes is not None:
+            if atomname in atomtypes:
+                alias = atomtypes[atomname]
+            else:
+                continue
+        rpos[alias].append(lattice.repcell.abs2rel(position))
     rdf = []
     rdfname = []
     volume =  np.linalg.det(lattice.repcell.mat)
@@ -65,6 +74,20 @@ def hook7(lattice):
         values = [i*binw]+[r[i] for r in rdf]
         print("\t".join(["{0:.3f}".format(v) for v in values]))
     lattice.logger.info("Hook7: end.")
+
+
+def argparser(lattice, arg):
+    global options
+    lattice.logger.info("Hook0: Preprocess.")
+    options={"atomtypes":None}
+    if arg != "":
+        atomtypes = dict()
+        for a in arg.split(","):
+            aliases = a.split("=")
+            for alias in aliases:
+                atomtypes[alias] = alias[0]
+        options["atomtypes"] = atomtypes
+    lattice.logger.info("Hook0: end.")
     
 
-hooks = {7:hook7}
+hooks = {0:argparser,7:hook7}
