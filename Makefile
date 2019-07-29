@@ -1,15 +1,15 @@
 .DELETE_ON_ERROR:
-OS=$(shell uname)
-ifeq ($(OS), Darwin)
-	DEST=~/Library/Application\ Support/GenIce
-else
-	DEST=~/.genice
-endif
 GENICE=genice
+
+all: README.md
+
+%: temp_% replacer.py genice_rdf/formats/_RDF.py
+	python replacer.py < $< > $@
+
 
 test: 5.rdf.test
 %.rdf: genice_rdf/formats/_RDF.py Makefile
-	$(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2,OW] > $@
+	$(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2,OW] --debug > $@
 %.test:
 	make $*
 	diff $* ref/$*

@@ -40,14 +40,11 @@ setup(
     ],
     
     entry_points = {
-        'genice_format_hook0': [
-            '_RDF    = genice_rdf.formats._RDF:argparser',
-        ],
-        'genice_format_hook7': [
-            '_RDF    = genice_rdf.formats._RDF:hook7',
+        'genice_format': [
+            '_RDF    = genice_rdf.formats._RDF',
         ],
     },
-    install_requires=['PairList>=0.2.3', 'GenIce>=0.23'],
+    install_requires=['PairList>=0.2.3', 'GenIce>=0.25'],
 
     license='MIT',
 )
