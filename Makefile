@@ -13,10 +13,32 @@ test: 5.rdf.test
 %.test:
 	make $*
 	diff $* ref/$*
-check:
-	./setup.py check
+
+
+prepare: # might require root privilege.
+	pip install genice pairlist
+
+
+test-deploy: build
+	twine upload -r pypitest dist/*
+test-install:
+	pip install pairlist
+	pip install --index-url https://test.pypi.org/simple/ genice-rdf
+
+
+
 install:
 	./setup.py install
+uninstall:
+	-pip uninstall -y genice-rdf
+build: README.md $(wildcard genice_rdf/formats/*.py)
+	./setup.py sdist bdist_wheel
+
+
+deploy: build
+	twine upload dist/*
+check:
+	./setup.py check
 pypi: check
 	./setup.py sdist bdist_wheel upload
 clean:
