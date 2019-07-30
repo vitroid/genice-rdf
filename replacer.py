@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import sys
-from tool import line_replacer
-import genice_rdf
+from genice.tool import line_replacer
 from genice_rdf.formats._RDF import __doc__
 import distutils.core
 

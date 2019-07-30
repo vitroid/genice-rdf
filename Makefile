@@ -39,8 +39,6 @@ deploy: build
 	twine upload dist/*
 check:
 	./setup.py check
-pypi: check
-	./setup.py sdist bdist_wheel upload
 clean:
 	-rm $(ALL) *~ */*~ *.rdf
 	-rm -rf build dist *.egg-info
