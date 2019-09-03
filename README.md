@@ -2,7 +2,7 @@
 
 A GenIce format plugin to calculate radial distribution functions.
 
-version 0.3
+version 0.3.1
 
 ## Requirements
 
@@ -28,12 +28,15 @@ Copy the files in formats/ into your local formats/ folder.
     
     Usage: 
         % genice 1c -r 3 3 3 -w tip4p -f _RDF > 1c.rdf
-        % genice 1c -r 3 3 3 -w tip4p -f _RDF[OW,H=HW1=HW2] > 1c.rdf
-        % analice data.gro  -O OW -H HW[12] -w tip3p -f _RDF[OW,HW1=HW2] > data.rdf
+        % genice 1c -r 3 3 3 -w tip4p -f _RDF[OW:H=HW1=HW2] > 1c.rdf
+        % analice data.gro  -O OW -H HW[12] -w tip3p -f _RDF[OW:HW1=HW2] > data.rdf
     
     Options:
         Atom name
         Atom name and aliases chained with "=".
+        json      Output in JSON format.
+    
+    Options must be separated with colons.
     
     You can specify the list of atom types to be calculated.
     
@@ -46,7 +49,7 @@ Copy the files in formats/ into your local formats/ folder.
     If you just want the RDF of OW and H, and HW1 and HW2 should be 
     abbreviated by H, specify the option string like following.
     
-        % genice 1c -r 3 3 3 -w tip4p -f _RDF[OW,H=HW1=HW2] > 1c.rdf
+        % genice 1c -r 3 3 3 -w tip4p -f _RDF[OW:H=HW1=HW2] > 1c.rdf
 
 ## Test in place
 
