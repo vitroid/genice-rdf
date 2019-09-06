@@ -44,7 +44,7 @@ setup(
             '_RDF    = genice_rdf.formats._RDF',
         ],
     },
-    install_requires=['PairList>=0.2.3', 'GenIce>=0.25'],
+    install_requires=['PairList>=0.2.3', 'GenIce>=1.0.3'],
 
     license='MIT',
 )
