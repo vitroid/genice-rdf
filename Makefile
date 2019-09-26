@@ -42,6 +42,6 @@ deploy: build
 check:
 	./setup.py check
 clean:
-	-rm $(ALL) *~ */*~ *.rdf
+	-rm $(ALL) *~ */*~ *.rdf *.json
 	-rm -rf build dist *.egg-info
 	-find . -name __pycache__ | xargs rm -rf
