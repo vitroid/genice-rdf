@@ -39,6 +39,7 @@ import numpy as np
 import pairlist as pl
 from collections import defaultdict
 import json
+from logging import getLogger
 
 def hist2rdf(hist, vol, natoms, binw, nbin):
     rdf = np.zeros(nbin)
@@ -58,12 +59,13 @@ def hist2rdf(hist, vol, natoms, binw, nbin):
 
 def hook7(lattice):
     global options
+    logger = getLogger()
     atomtypes = options["atomtypes"]
         
-    lattice.logger.info("Hook7: Output radial distribution functions.")
-    lattice.logger.info("  Total number of atoms: {0}".format(len(lattice.atoms)))
+    logger.info("Hook7: Output radial distribution functions.")
+    logger.info("  Total number of atoms: {0}".format(len(lattice.atoms)))
     binw = 0.003
-    nbin = 300
+    nbin = int(options["range"]/binw)
     cellmat = lattice.repcell.mat
     rpos = defaultdict(list)
     for atom in lattice.atoms:
@@ -79,11 +81,11 @@ def hook7(lattice):
     rdfname = []
     volume =  np.linalg.det(lattice.repcell.mat)
     grid = pl.determine_grid(cellmat,binw*nbin)
-    lattice.logger.info("  {0}".format(rpos.keys()))
+    logger.info("  {0}".format(rpos.keys()))
     for atomname in rpos:
         ra = rpos[atomname] = np.array(rpos[atomname])
         na = ra.shape[0]
-        lattice.logger.info("  Pair {0}-{0}".format(atomname))
+        logger.info("  Pair {0}-{0}".format(atomname))
         i,j,delta = pl.pairs_fine(ra, binw*nbin, cellmat, grid, distance=True, raw=True)
         delta = np.floor(delta/binw)
         hist = dict(zip(*np.unique(delta, return_counts=True)))
@@ -94,7 +96,7 @@ def hook7(lattice):
         rb = rpos[b]
         na = ra.shape[0]
         nb = rb.shape[0]
-        lattice.logger.info("  Pair {0}-{1}".format(a,b))
+        logger.info("  Pair {0}-{1}".format(a,b))
         i,j,delta = pl.pairs_fine_hetero(ra, rb, binw*nbin, cellmat, grid, distance=True, raw=True)
         delta = np.floor(delta/binw)
         hist = dict(zip(*np.unique(delta, return_counts=True)))
@@ -112,13 +114,14 @@ def hook7(lattice):
         for i in range(1,nbin):
             values = [i*binw]+[r[i] for r in rdf]
             print("\t".join(["{0:.3f}".format(v) for v in values]))
-    lattice.logger.info("Hook7: end.")
+    logger.info("Hook7: end.")
 
 
 def argparser(lattice, arg):
     global options
-    lattice.logger.info("Hook0: Preprocess.")
-    options={"atomtypes":{}, "json":False}
+    logger = getLogger()
+    logger.info("Hook0: Preprocess.")
+    options={"atomtypes":{}, "json":False, "range":0.9}
     if arg != "":
         for a in arg.split(":"):
             if a in ["JSON", "json"]:
@@ -126,11 +129,15 @@ def argparser(lattice, arg):
                 logger.info("  JSON")
             else:
                 aliases = a.split("=")
-                for alias in aliases:
-                    options["atomtypes"][alias] = aliases[0]
-                    logger.info("  {0} is an alias of {1}.".format(alias, aliases[0]))
-    lattice.logger.info(options["atomtypes"])
-    lattice.logger.info("Hook0: end.")
+                if aliases[0] == "range":
+                    options["range"] = float(aliases[1])
+                    logger.info("  Range/nm: {0}".format(options["range"]))
+                else:
+                    for alias in aliases:
+                        options["atomtypes"][alias] = aliases[0]
+                        logger.info("  {0} is an alias of {1}.".format(alias, aliases[0]))
+    logger.info(options["atomtypes"])
+    logger.info("Hook0: end.")
     
 
 hooks = {0:argparser,7:hook7}

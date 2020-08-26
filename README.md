@@ -2,12 +2,12 @@
 
 A GenIce format plugin to calculate radial distribution functions.
 
-version 0.3.1
+version 0.3.3
 
 ## Requirements
 
 * PairList>=0.2.3
-* GenIce>=0.25
+* GenIce<2.0
 
 ## Installation from PyPI
 
@@ -35,6 +35,8 @@ Copy the files in formats/ into your local formats/ folder.
         Atom name
         Atom name and aliases chained with "=".
         json      Output in JSON format.
+        range=x   Range of interest (0.9 nm)
+        binw=x    Bin width (0.003 nm)
     
     Options must be separated with colons.
     

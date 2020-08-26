@@ -12,7 +12,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(os.path.dirname(__file__), 'genice_rdf', '__init__.py'),
                  encoding='utf8') as version_file:
     metadata = dict(re.findall(r"""__([a-z]+)__ = "([^"]+)""", version_file.read()))
-    
+
 
 
 long_desc = "".join(open("README.md").readlines())
@@ -38,13 +38,13 @@ setup(
     packages=['genice_rdf',
               'genice_rdf.formats',
     ],
-    
+
     entry_points = {
         'genice_format': [
             '_RDF    = genice_rdf.formats._RDF',
         ],
     },
-    install_requires=['PairList>=0.2.3', 'GenIce>=1.0.3'],
+    install_requires=['PairList>=0.2.3', 'GenIce<2.0'],
 
     license='MIT',
 )
