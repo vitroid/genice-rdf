@@ -1,16 +1,17 @@
 .DELETE_ON_ERROR:
 GENICE=genice
-
+BASE=genice2_rdf
+PACKAGE=genice2-rdf
 all: README.md
 
-%: temp_% replacer.py genice_rdf/formats/_RDF.py
-	python replacer.py < $< > $@
+%: temp_% replacer.py $(BASE)/formats/_RDF.py
+	python3 replacer.py < $< > $@
 
 
 test: 5.rdf.test 3.rdf.json.test
-%.rdf: genice_rdf/formats/_RDF.py Makefile
+%.rdf: $(BASE)/formats/_RDF.py Makefile
 	$(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2:O=OW] --debug > $@
-%.rdf.json: genice_rdf/formats/_RDF.py Makefile
+%.rdf.json: $(BASE)/formats/_RDF.py Makefile
 	$(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2:O=OW:json] > $@
 %.test:
 	make $*
@@ -18,22 +19,22 @@ test: 5.rdf.test 3.rdf.json.test
 
 
 prepare: # might require root privilege.
-	pip install genice pairlist
+	pip install genice2 pairlist
 
 
 test-deploy: build
 	twine upload -r pypitest dist/*
 test-install:
 	pip install pairlist
-	pip install --index-url https://test.pypi.org/simple/ genice-rdf
+	pip install --index-url https://test.pypi.org/simple/ $(PACKAGE)
 
 
 
 install:
 	./setup.py install
 uninstall:
-	-pip uninstall -y genice-rdf
-build: README.md $(wildcard genice_rdf/formats/*.py)
+	-pip uninstall -y $(PACKAGE)
+build: README.md $(wildcard $(BASE)/formats/*.py)
 	./setup.py sdist bdist_wheel
 
 

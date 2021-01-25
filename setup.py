@@ -9,7 +9,7 @@ import re
 #Copied from wheel package
 here = os.path.abspath(os.path.dirname(__file__))
 
-with codecs.open(os.path.join(os.path.dirname(__file__), 'genice_rdf', '__init__.py'),
+with codecs.open(os.path.join(os.path.dirname(__file__), 'genice2_rdf', '__init__.py'),
                  encoding='utf8') as version_file:
     metadata = dict(re.findall(r"""__([a-z]+)__ = "([^"]+)""", version_file.read()))
 
@@ -19,7 +19,7 @@ long_desc = "".join(open("README.md").readlines())
 
 
 setup(
-    name='genice_rdf',
+    name='genice2_rdf',
     version=metadata['version'],
     description='RDF format plugin for GenIce.',
     long_description=long_desc,
@@ -35,16 +35,16 @@ setup(
     url='https://github.com/vitroid/genice-rdf/',
     keywords=['genice', 'RDF'],
 
-    packages=['genice_rdf',
-              'genice_rdf.formats',
+    packages=['genice2_rdf',
+              'genice2_rdf.formats',
     ],
 
     entry_points = {
-        'genice_format': [
-            '_RDF    = genice_rdf.formats._RDF',
+        'genice2_format': [
+            '_RDF    = genice2_rdf.formats._RDF',
         ],
     },
-    install_requires=['PairList>=0.2.3', 'GenIce>=2.0'],
+    install_requires=['PairList>=0.2.3', 'GenIce2'],
 
     license='MIT',
 )

@@ -1,6 +1,6 @@
 # coding: utf-8
 """
-A GenIce format plugin to calculate radial distribution functions.
+A GenIce2 format plugin to calculate radial distribution functions.
 
 Usage:
     % genice 1c -r 3 3 3 -w tip4p -f _RDF > 1c.rdf
@@ -58,8 +58,8 @@ def hist2rdf(hist, vol, natoms, binw, nbin):
     return rdf
 
 
-import genice.formats
-class Format(genice.formats.Format):
+import genice2.formats
+class Format(genice2.formats.Format):
 
 
     def __init__(self, **kwargs):

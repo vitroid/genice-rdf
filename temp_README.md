@@ -1,31 +1,41 @@
-# [genice-rdf](%%url%%)
+# [{{package}}]({{url}})
 
-%%summary%%
+{{summary}}
 
-version %%version%%
+version {{version}}
 
 ## Requirements
 
-* %%requires%%
+{% for i in requires %}
+* {{i}}
+{%- endfor %}
 
 ## Installation from PyPI
 
-    % pip install %%package%%
+```shell
+% pip install {{package}}
+```
 
 ## Manual Installation
 
 ### System-wide installation
 
-    % make install
+```shell
+% make install
+```
 
 ### Private installation
 
-Copy the files in formats/ into your local formats/ folder.
+Copy the files in {{base}}/formats/ into your local formats/ folder.
 
 ## Usage
 
-    %%usage%%
+{%- filter indent %}
+    {{usage}}
+{%- endfilter %}
 
 ## Test in place
 
-    % make test
+```shell
+% make test
+```
