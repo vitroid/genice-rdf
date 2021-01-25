@@ -1,5 +1,5 @@
 .DELETE_ON_ERROR:
-GENICE=genice
+GENICE=genice2
 BASE=genice2_rdf
 PACKAGE=genice2-rdf
 all: README.md
@@ -10,9 +10,9 @@ all: README.md
 
 test: 5.rdf.test 3.rdf.json.test
 %.rdf: $(BASE)/formats/_RDF.py Makefile
-	$(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2:O=OW] --debug > $@
+	( cd $(BASE) && $(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2:O=OW] --debug ) > $@ 
 %.rdf.json: $(BASE)/formats/_RDF.py Makefile
-	$(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2:O=OW:json] > $@
+	( cd $(BASE) && $(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2:O=OW:json] ) > $@
 %.test:
 	make $*
 	diff $* ref/$*

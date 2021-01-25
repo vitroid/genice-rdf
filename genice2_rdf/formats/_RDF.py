@@ -113,13 +113,25 @@ class Format(genice2.formats.Format):
         rdf = []
         rdfname = []
         volume =  np.linalg.det(lattice.repcell.mat)
-        grid = pl.determine_grid(cellmat,binw*nbin)
-        logger.info("  {0}".format(rpos.keys()))
+        # grid = pl.determine_grid(cellmat,binw*nbin)
+        logger.info(f"  {rpos.keys()}")
         for atomname in rpos:
-            ra = rpos[atomname] = np.array(rpos[atomname])
+            n = len(rpos[atomname])
+            ra = np.zeros([n,3])
+            ra[:] = rpos[atomname]
+            rpos[atomname] = ra
+        for atomname in rpos:
+#            rpos[atomname] = np.array(rpos[atomname])
+            logger.debug(rpos[atomname].shape)
+            ra = rpos[atomname]
             na = ra.shape[0]
-            logger.info("  Pair {0}-{0}".format(atomname))
-            i,j,delta = pl.pairs_fine(ra, binw*nbin, cellmat, grid, distance=True, raw=True)
+            logger.info(f"  Pair {atomname}-{atomname}")
+            i,j,delta = pl.pairs_iter(ra,
+                                      binw*nbin,
+                                      cellmat,
+                                      #grid=grid,
+                                      distance=True,
+                                      raw=True)
             delta = np.floor(delta/binw)
             hist = dict(zip(*np.unique(delta, return_counts=True)))
             rdfname.append((atomname, atomname))
@@ -130,7 +142,13 @@ class Format(genice2.formats.Format):
             na = ra.shape[0]
             nb = rb.shape[0]
             logger.info("  Pair {0}-{1}".format(a,b))
-            i,j,delta = pl.pairs_fine_hetero(ra, rb, binw*nbin, cellmat, grid, distance=True, raw=True)
+            i,j,delta = pl.pairs_iter(ra,
+                                      binw*nbin,
+                                      cellmat,
+                                      pos2=rb,
+                                      # grid=grid,
+                                      distance=True,
+                                      raw=True)
             delta = np.floor(delta/binw)
             hist = dict(zip(*np.unique(delta, return_counts=True)))
             rdfname.append((a,b))
