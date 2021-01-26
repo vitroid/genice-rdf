@@ -2,7 +2,7 @@
 
 A [GenIce2](https://github.com/vitroid/GenIce) format plugin to calculate radial distribution functions.
 
-version 0.5
+version 0.5.2
 
 ## Requirements
 

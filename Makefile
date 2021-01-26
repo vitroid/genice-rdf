@@ -5,12 +5,13 @@ PACKAGE=genice2-rdf
 all: README.md
 
 %: temp_% replacer.py $(BASE)/formats/_RDF.py
+	pip install genice2-dev
 	python3 replacer.py < $< > $@
 
 
 test: 5.rdf.test 3.rdf.json.test
 %.rdf: $(BASE)/formats/_RDF.py Makefile
-	( cd $(BASE) && $(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2:O=OW] --debug ) > $@ 
+	( cd $(BASE) && $(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2:O=OW] --debug ) > $@
 %.rdf.json: $(BASE)/formats/_RDF.py Makefile
 	( cd $(BASE) && $(GENICE) $* -r 3 3 3 -w tip4p -f _RDF[H=HW1=HW2:O=OW:json] ) > $@
 %.test:
