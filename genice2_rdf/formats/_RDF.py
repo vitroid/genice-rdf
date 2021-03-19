@@ -42,6 +42,7 @@ import pairlist as pl
 from collections import defaultdict
 import json
 from logging import getLogger
+from genice2.molecules  import serialize
 
 def hist2rdf(hist, vol, natoms, binw, nbin):
     rdf = np.zeros(nbin)
@@ -88,20 +89,22 @@ class Format(genice2.formats.Format):
 
 
     def hooks(self):
-        return {7:self.hook7}
+        return {7:self.Hook7}
 
 
-    def hook7(self, lattice):
+    def Hook7(self, lattice):
         logger = getLogger()
         atomtypes = self.options["atomtypes"]
 
         logger.info("Hook7: Output radial distribution functions.")
-        logger.info("  Total number of atoms: {0}".format(len(lattice.atoms)))
+        atoms = []
+        for mols in ice.universe:
+            atoms += serialize(mols)
         binw = self.options["binw"]
         nbin = int(self.options["range"]/binw)
         cellmat = lattice.repcell.mat
         rpos = defaultdict(list)
-        for atom in lattice.atoms:
+        for atom in atoms:
             resno, resname, atomname, position, order = atom
             alias = atomname
             if len(atomtypes):
