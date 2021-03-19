@@ -19,7 +19,7 @@ long_desc = "".join(open("README.md").readlines())
 
 
 setup(
-    name='genice2_rdf',
+    name='genice2-rdf',
     version=metadata['version'],
     description='RDF format plugin for GenIce.',
     long_description=long_desc,
