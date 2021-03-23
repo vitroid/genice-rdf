@@ -92,7 +92,7 @@ class Format(genice2.formats.Format):
         return {7:self.Hook7}
 
 
-    def Hook7(self, lattice):
+    def Hook7(self, ice):
         logger = getLogger()
         atomtypes = self.options["atomtypes"]
 
@@ -102,7 +102,7 @@ class Format(genice2.formats.Format):
             atoms += serialize(mols)
         binw = self.options["binw"]
         nbin = int(self.options["range"]/binw)
-        cellmat = lattice.repcell.mat
+        cellmat = ice.repcell.mat
         rpos = defaultdict(list)
         for atom in atoms:
             resno, resname, atomname, position, order = atom
@@ -112,10 +112,10 @@ class Format(genice2.formats.Format):
                     alias = atomtypes[atomname]
                 else:
                     continue
-            rpos[alias].append(lattice.repcell.abs2rel(position))
+            rpos[alias].append(ice.repcell.abs2rel(position))
         rdf = []
         rdfname = []
-        volume =  np.linalg.det(lattice.repcell.mat)
+        volume =  np.linalg.det(ice.repcell.mat)
         # grid = pl.determine_grid(cellmat,binw*nbin)
         logger.info(f"  {rpos.keys()}")
         for atomname in rpos:
