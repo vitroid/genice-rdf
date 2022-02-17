@@ -66,7 +66,7 @@ class Format(genice2.formats.Format):
     def __init__(self, **kwargs):
         logger = getLogger()
         logger.info("Hook0: Preprocess.")
-        self.options={"atomtypes":{}, "json":False, "range":0.9, "binw":0.003}
+        self.options={"atomtypes":{}, "json":False, "range":0.0, "binw":0.005}
         for key, value in kwargs.items():
             if key in ["JSON", "json"]:
                 self.options["json"] = True
@@ -100,9 +100,16 @@ class Format(genice2.formats.Format):
         atoms = []
         for mols in ice.universe:
             atoms += serialize(mols)
-        binw = self.options["binw"]
-        nbin = int(self.options["range"]/binw)
         cellmat = ice.repcell.mat
+        binw = self.options["binw"]
+        binr = self.options["range"]
+        if binr == 0.:
+            # 周囲26imageのなかで最も近いものまでの距離をさがす。
+            coord = np.array([(x,y,z) for x in (-1,0,1) for y in (-1,0,1) for z in (-1,0,1)]) @ cellmat
+            L = np.linalg.norm(coord, axis=1)
+            dmin = np.sort(L)[1]
+            binr = dmin/2
+        nbin = int(binr/binw)
         rpos = defaultdict(list)
         for atom in atoms:
             resno, resname, atomname, position, order = atom

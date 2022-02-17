@@ -1,19 +1,19 @@
-# [genice2_rdf](https://github.com/vitroid/genice-rdf/)
+# [genice2-rdf](https://github.com/vitroid/genice-rdf/)
 
 A [GenIce2](https://github.com/vitroid/GenIce) format plugin to calculate radial distribution functions.
 
-version 0.5.2
+version 2.1
 
 ## Requirements
 
 
-* PairList>=0.2.3
-* GenIce2
+* PairList>=0.2.11.1
+* GenIce2>=2.1b2
 
 ## Installation from PyPI
 
 ```shell
-% pip install genice2_rdf
+% pip install genice2-rdf
 ```
 
 ## Manual Installation
